@@ -3,6 +3,8 @@ package application;
 import java.util.Locale;
 import java.util.Scanner;
 import entities.Exer_List_Abs;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Exer_List_2 {
 
@@ -14,7 +16,7 @@ public class Exer_List_2 {
 		int n = sc.nextInt();
 		sc.nextLine();
 		
-		Exer_List_Abs[] lista = new Exer_List_Abs[n];
+		List<Exer_List_Abs> lista = new ArrayList<>();
 		
 		for (int i = 0; i < n; i++) {
 			System.out.println("informe o ID do funcionário: ");
@@ -25,16 +27,17 @@ public class Exer_List_2 {
 			System.out.println("informe o salário do funcionário: ");
 			double salary = sc.nextDouble();
 			sc.nextLine();
-			lista[i] = new Exer_List_Abs(id, name, salary);
+			
+			lista.add(new Exer_List_Abs(id, name, salary));
 		}
 		
-		for (int i = 0; i < n; i++) {
-			int empregado = i + 1;
-			System.out.println("Employee "+ empregado);
-			System.out.println("Id: "+ lista[i].getId());
-			System.out.println("Name: "+  lista[i].getName());
-			System.out.printf("Salary: %.2f\n",  lista[i].getSalary());
-		}
+		  for (int i = 0; i < lista.size(); i++) {
+	            Exer_List_Abs emp = lista.get(i);
+	            System.out.println("Employee " + (i + 1));
+	            System.out.println("Id: " + emp.getId());
+	            System.out.println("Name: " + emp.getName());
+	            System.out.printf("Salary: %.2f\n", emp.getSalary());
+	        }
 		
 		
 		System.out.println("Informe a matricula do empregado que deseja alterar salario: ");
@@ -47,27 +50,28 @@ public class Exer_List_2 {
 		
 		boolean found = false;
 		
-		for (int i = 0; i < n; i++) {
-			if (alteracao == lista[i].getId()) {
-				lista[i].setSalary(lista[i].getSalary() * (1 + percentual / 100));	
-				found = true;
-				break;
-			}		
-			
-		}
+
+        for (Exer_List_Abs emp : lista) {
+            if (emp.getId() == alteracao) {
+                emp.setSalary(emp.getSalary() * (1 + percentual / 100));
+                found = true;
+                break;
+            }
+        }
 		
 		if (!found) {
 			System.out.println("Funcionário com essa matrícula não existe.");
 		}
 		
 		
-		for (int i = 0; i < n; i++) {
-			int empregado = i + 1;
-			System.out.println("Employee "+ empregado);
-			System.out.println("Id: "+ lista[i].getId());
-			System.out.println("Name: "+  lista[i].getName());
-			System.out.printf("Salary: %.2f\n",  lista[i].getSalary());
-		}
+		System.out.println("\nLista atualizada de funcionários:");
+        for (int i = 0; i < lista.size(); i++) {
+            Exer_List_Abs emp = lista.get(i);
+            System.out.println("Employee " + (i + 1));
+            System.out.println("Id: " + emp.getId());
+            System.out.println("Name: " + emp.getName());
+            System.out.printf("Salary: %.2f\n", emp.getSalary());
+        }
 		
 		
 		sc.close();
